@@ -209,6 +209,67 @@ a.btn3d:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
 .bridge { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 4px; font-size: 0.78rem; color: var(--steel); text-align: center; line-height: 1.2; padding: 0 2px; }
 .bridge::before, .bridge::after { content: ""; width: 26px; height: 2px; background: var(--ink); }
 
+/* Telltale flow diagram */
+.toyota { --ch-gauge: #FF8A3D; --ch-vib: #6FB7FF; --ch-temp: #FF6B6B; }
+.tt-lede { font-size: 1.15rem; max-width: 40em; margin: -12px 0 28px; }
+.ttd { margin: 0; border: 1px solid var(--rule); background: var(--surface); padding: 28px; display: flex; flex-direction: column; gap: 18px; }
+.ttd-row-head { display: flex; align-items: center; gap: 12px; }
+.ttd-row-head b { display: block; font-family: var(--display); font-stretch: 115%; font-weight: 800; font-size: 1.15rem; line-height: 1.1; }
+.ttd-row-head small { display: block; color: var(--steel); font-size: 0.86rem; }
+.ttd-num { display: grid; place-items: center; width: 30px; height: 30px; flex: none; border: 1.5px solid var(--accent); color: var(--accent-ink); font-weight: 800; border-radius: 50%; }
+.ttd-flow { display: grid; align-items: stretch; }
+.ttd-flow-a { grid-template-columns: minmax(0, 1fr) 34px minmax(0, 1fr) 34px minmax(0, 1fr) 34px minmax(0, 1fr); }
+.ttd-flow-b { grid-template-columns: minmax(0, 1fr) 34px minmax(0, 1.5fr) 34px minmax(0, 0.95fr) 34px minmax(0, 0.95fr); }
+.ttd-col { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.ttd-step { display: flex; align-items: center; gap: 8px; font-family: var(--display); font-stretch: 112%; font-weight: 800; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-ink); margin-bottom: 4px; }
+.ttd-pill { font-family: var(--body); font-stretch: 100%; letter-spacing: 0.06em; font-size: 0.66rem; padding: 2px 7px; border: 1px solid #5CC98A; color: #5CC98A; border-radius: 10px; }
+.ttd-card { border: 1px solid var(--rule); background: var(--paper); padding: 10px 12px; min-width: 0; }
+.ttd-card b { display: block; font-family: var(--display); font-stretch: 108%; font-weight: 700; font-size: 0.95rem; line-height: 1.2; }
+.ttd-card small { display: block; font-size: 0.8rem; color: var(--steel); line-height: 1.35; margin-top: 3px; }
+.ttd-card.machine { display: flex; gap: 10px; align-items: center; }
+.tag-glyph { width: 32px; height: 32px; flex: none; }
+.ttd-card.ch { border-left: 3px solid var(--rule); }
+.ttd-card.gauge { border-left-color: var(--ch-gauge); }
+.ttd-card.vib { border-left-color: var(--ch-vib); }
+.ttd-card.temp { border-left-color: var(--ch-temp); }
+.ttd-card.store { border-color: var(--accent); }
+.ttd-group { border: 1px dashed var(--rule); padding: 8px; display: flex; flex-direction: column; gap: 6px; }
+.ttd-group-tag { font-size: 0.72rem; font-weight: 700; color: var(--steel); }
+.ttd-board { border: 2px solid var(--zone); padding: 14px; }
+.ttd-lanes { display: flex; flex-direction: column; gap: 6px; }
+.ttd-lane { border: 1px solid var(--rule); background: var(--paper); padding: 10px 12px; }
+.ttd-lane-tag { display: block; font-size: 0.74rem; font-weight: 700; color: var(--steel); margin-bottom: 5px; }
+.ttd-lane ol { margin: 0; padding-left: 1.25em; font-size: 0.86rem; line-height: 1.5; }
+.ttd-lane li em { display: block; font-style: normal; font-size: 0.76rem; color: var(--accent-ink); }
+.ttd-bridge { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 0.74rem; color: var(--steel); text-align: center; line-height: 1.2; }
+.ttd-bridge::before, .ttd-bridge::after { content: ""; width: 2px; height: 16px; background: var(--steel); }
+.ttd-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.ttd-chips span { font-size: 0.74rem; padding: 3px 8px; border: 1px solid var(--rule); border-radius: 12px; color: var(--ink); }
+.ttd-note { font-size: 0.8rem; color: var(--steel); border: 1px dashed var(--rule); padding: 8px 10px; line-height: 1.4; }
+.ttd-fan { align-self: center; width: 2px; height: 12px; background: var(--rule); }
+.ttd-handoff { display: flex; align-items: center; gap: 12px; padding-left: 14px; font-size: 0.84rem; color: var(--steel); }
+.ttd-handoff .ttd-arrow { width: 2px; height: 30px; }
+
+/* arrows light up in sequence */
+.ttd { --n: 7; --step: 0.55s; }
+.ttd-arrow { position: relative; align-self: center; justify-self: center; width: 26px; height: 2px; background: var(--rule); overflow: visible; }
+.ttd-arrow::after { content: ""; position: absolute; right: -2px; top: -4px; border: 5px solid transparent; border-left: 6px solid var(--rule); border-right: 0; animation: ttd-head-x calc(var(--n) * var(--step) + 1s) ease-out infinite; animation-delay: calc(var(--i) * var(--step)); }
+.ttd-arrow::before { content: ""; position: absolute; inset: 0; background: var(--accent); box-shadow: 0 0 6px var(--accent); transform-origin: left center; transform: scaleX(0); animation: ttd-fill-x calc(var(--n) * var(--step) + 1s) ease-out infinite; animation-delay: calc(var(--i) * var(--step)); }
+.ttd-handoff .ttd-arrow::after { right: auto; left: -4px; top: auto; bottom: -2px; border: 5px solid transparent; border-top: 6px solid var(--rule); border-bottom: 0; animation-name: ttd-head-y; }
+.ttd-handoff .ttd-arrow::before { transform-origin: center top; transform: scaleY(0); animation-name: ttd-fill-y; }
+@keyframes ttd-fill-x { 0% { transform: scaleX(0); opacity: 1; } 9%, 15% { transform: scaleX(1); opacity: 1; } 26%, 100% { transform: scaleX(1); opacity: 0; } }
+@keyframes ttd-fill-y { 0% { transform: scaleY(0); opacity: 1; } 9%, 15% { transform: scaleY(1); opacity: 1; } 26%, 100% { transform: scaleY(1); opacity: 0; } }
+@keyframes ttd-head-x { 0%, 6% { border-left-color: var(--rule); } 10%, 17% { border-left-color: var(--accent); } 26%, 100% { border-left-color: var(--rule); } }
+@keyframes ttd-head-y { 0%, 6% { border-top-color: var(--rule); } 10%, 17% { border-top-color: var(--accent); } 26%, 100% { border-top-color: var(--rule); } }
+@media (max-width: 1000px) {
+  .ttd-flow-a, .ttd-flow-b { grid-template-columns: minmax(0, 1fr); }
+  .ttd-flow .ttd-arrow { width: 2px; height: 26px; margin: 4px 0; }
+  .ttd-flow .ttd-arrow::after { right: auto; left: -4px; top: auto; bottom: -2px; border: 5px solid transparent; border-top: 6px solid var(--rule); border-bottom: 0; animation-name: ttd-head-y; }
+  .ttd-flow .ttd-arrow::before { transform-origin: center top; transform: scaleY(0); animation-name: ttd-fill-y; }
+}
+@media (max-width: 640px) { .ttd { padding: 16px; } }
+@media (prefers-reduced-motion: reduce) { .ttd-arrow::before, .ttd-arrow::after { animation: none; } .ttd-arrow::before { opacity: 0; } }
+
 /* other projects */
 .projects { display: flex; flex-direction: column; }
 .proj { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 16px 48px; padding-block: 30px; border-top: 1px solid var(--rule); }
@@ -490,39 +551,73 @@ section[id] { scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 72px); }
         <div class="btn-row"><a class="btn3d" href="https://github.com/CartonWaff1e/Telltale" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M13.5 4l-3 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Telltale on GitHub</span></a></div>
       </div>
 
-      <div class="tt-body">
-        <div class="prose">
-          <p>Telltale is the part of the rover that watches each machine and flags any that start behaving abnormally. It runs entirely on an Arduino UNO Q that rides on top of the rover. Once it's set up, it doesn't use the cloud or the network at all.</p>
-          <p>Each machine has an AprilTag beside it. When Telltale sees the tag, it knows which machine it's looking at and which of three channels to watch: the gauge, vibration and temperature. If a sensor gets unplugged, only that sensor's channel drops out and the rest keep running.</p>
-          <p>I wrote the C++ firmware, which samples a VL53L0X for vibration and an MLX90640 for temperature over I²C and publishes summaries across the Arduino Router Bridge. I also wrote the vision side in Python and OpenCV. It finds 36h11 tags and gets the needle angle from a four-point calibration.</p>
-          <p>Each channel has its own anomaly model (static limits, IsolationForest, trend forecasting). Readings are stored in SQLite, and you can see them over an HTTP API, in a small web UI with no dependencies, or on an LED matrix.</p>
+      <p class="tt-lede">Watches every machine the rover visits and flags the ones that start drifting from normal, all on one board, offline.</p>
+
+      <figure class="ttd" aria-label="How the rover and Telltale work together: the rover maps the floor with lidar and drives a recorded route to each machine, the arm centres the camera, then Telltale on the Arduino UNO Q reads the tag, gauge and sensors, checks each channel with its own anomaly model, and stores and shows the results locally.">
+        <div class="ttd-row-head"><span class="ttd-num">1</span><div><b>Rover movement</b><small>Mapping the floor, driving to each machine and aiming the camera</small></div></div>
+        <div class="ttd-flow ttd-flow-a">
+          <div class="ttd-card"><b>Intel NUC</b><small>Runs ROS 2 for the rover</small></div>
+          <div class="ttd-arrow" style="--i:0" aria-hidden="true"></div>
+          <div class="ttd-card"><b>Livox Mid-360 + FAST-LIO</b><small>Lidar maps the factory floor</small></div>
+          <div class="ttd-arrow" style="--i:1" aria-hidden="true"></div>
+          <div class="ttd-card"><b>Waypoint replay</b><small>Drives the same recorded route to every machine</small></div>
+          <div class="ttd-arrow" style="--i:2" aria-hidden="true"></div>
+          <div class="ttd-card"><b>4-axis arm</b><small>Visual servoing centres the camera on the dial</small></div>
         </div>
 
-        <div class="diagram" role="group" aria-label="Telltale block diagram">
-          <div class="row in">
-            <div class="node"><b>VL53L0X</b><small>Vibration, over I²C</small></div>
-            <div class="node"><b>MLX90640</b><small>Temperature, over I²C</small></div>
-            <div class="node"><b>Camera</b><small>AprilTag and gauge needle</small></div>
-          </div>
-          <div class="wire" aria-hidden="true"><i></i><i></i><i></i></div>
-          <div class="board">
-            <b>Arduino UNO Q</b>
-            <div class="board-grid">
-              <div class="node"><b>Microcontroller</b><small>C++ firmware samples the sensors and publishes summaries</small></div>
-              <div class="bridge">Router<br>Bridge</div>
-              <div class="node"><b>Linux side</b><small>Python and OpenCV read the tag and needle, then each channel's anomaly model checks the reading</small></div>
+        <div class="ttd-handoff" aria-hidden="true"><div class="ttd-arrow" style="--i:3" aria-hidden="true"></div><span>Rover parks at a machine. Telltale takes over</span></div>
+
+        <div class="ttd-row-head"><span class="ttd-num">2</span><div><b>Vision processing</b><small>Telltale, on one Arduino UNO Q riding on the rover</small></div></div>
+        <div class="ttd-flow ttd-flow-b">
+          <div class="ttd-col">
+            <p class="ttd-step">Sense</p>
+            <div class="ttd-card machine"><svg class="tag-glyph" viewBox="0 0 10 10" aria-hidden="true"><rect width="10" height="10" fill="#fff"/><path d="M1 1h8v8H1z" fill="#000"/><path d="M2 2h1v1H2zM4 2h2v1H4zM7 2h1v2H7zM3 3h1v1H3zM2 4h2v1H2zM5 4h1v2H5zM6 5h2v1H6zM2 6h1v2H2zM4 6h1v1H4zM3 7h2v1H3zM6 7h2v1H6z" fill="#fff"/></svg><div><b>AprilTag 36h11</b><small>Beside each machine. Says which machine it is and which channels to watch</small></div></div>
+            <div class="ttd-card ch gauge"><b>USB-C camera</b><small>Gauge needle, through a USB dongle</small></div>
+            <div class="ttd-group">
+              <span class="ttd-group-tag">Qwiic 1-to-4 splitter, I²C</span>
+              <div class="ttd-card ch vib"><b>VL53L0X</b><small>Time-of-flight, for vibration</small></div>
+              <div class="ttd-card ch temp"><b>MLX90640</b><small>Thermal array, for temperature</small></div>
             </div>
           </div>
-          <div class="wire one" aria-hidden="true"><i></i></div>
-          <div class="row out">
-            <div class="node"><b>SQLite</b><small>Reading history</small></div>
-            <div class="node"><b>HTTP API</b><small>For other systems</small></div>
-            <div class="node"><b>Web UI</b><small>No dependencies</small></div>
-            <div class="node"><b>LED matrix</b><small>Status at a glance</small></div>
+          <div class="ttd-arrow" style="--i:4" aria-hidden="true"></div>
+          <div class="ttd-col ttd-board">
+            <p class="ttd-step">Arduino UNO Q <span class="ttd-pill">Offline</span></p>
+            <div class="ttd-lanes">
+              <div class="ttd-lane">
+                <span class="ttd-lane-tag">STM32 microcontroller, C++</span>
+                <ol><li>Sample the I²C sensors</li><li>Summarise each channel</li><li>Publish over the bridge</li></ol>
+              </div>
+              <div class="ttd-bridge"><span>Router<br>Bridge</span></div>
+              <div class="ttd-lane">
+                <span class="ttd-lane-tag">Qualcomm Dragonwing, Linux, Python + OpenCV</span>
+                <ol><li>YOLO finds the gauge on the GPU<em>12 FPS after quantization, up from 3 or 4</em></li><li>Detect the 36h11 tag</li><li>Load that machine's channels</li><li>Homography + 4-point calibration</li><li>Needle angle becomes a reading</li></ol>
+              </div>
+            </div>
           </div>
-          <p class="cap">Everything in this diagram runs on the one board, with no network connection after setup.</p>
+          <div class="ttd-arrow" style="--i:5" aria-hidden="true"></div>
+          <div class="ttd-col">
+            <p class="ttd-step">Check</p>
+            <div class="ttd-card ch gauge"><b>Gauge channel</b><small>Own anomaly model</small></div>
+            <div class="ttd-card ch vib"><b>Vibration channel</b><small>Own anomaly model</small></div>
+            <div class="ttd-card ch temp"><b>Temperature channel</b><small>Own anomaly model</small></div>
+            <div class="ttd-card">
+              <b>Models used</b>
+              <div class="ttd-chips"><span>Static limits</span><span>IsolationForest</span><span>Trend forecast</span></div>
+            </div>
+            <div class="ttd-note">Sensor unplugged? Only its channel drops out. The rest keep running.</div>
+          </div>
+          <div class="ttd-arrow" style="--i:6" aria-hidden="true"></div>
+          <div class="ttd-col">
+            <p class="ttd-step">Report</p>
+            <div class="ttd-card store"><b>SQLite</b><small>Every reading, per machine and channel</small></div>
+            <div class="ttd-fan" aria-hidden="true"></div>
+            <div class="ttd-card"><b>HTTP API</b><small>For other systems</small></div>
+            <div class="ttd-card"><b>Web UI</b><small>No dependencies</small></div>
+            <div class="ttd-card"><b>7-inch screen</b><small>HDMI, faces the rear of the rover</small></div>
+            <div class="ttd-card"><b>LED matrix</b><small>Status at a glance</small></div>
+          </div>
         </div>
-      </div>
+      </figure>
     </div>
   </section>
 
